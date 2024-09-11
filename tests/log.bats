@@ -48,7 +48,7 @@ setup() {
   assert_output --partial "SUCCESS"
   assert_output --partial "Test success message without color"
   # Ensure there are no color escape sequences (i.e., no \033 or ANSI escape codes)
-  refute_output "\033"
+  refute_output --regexp $'\033'
   # Clean up environment variable
   unset NO_COLOR
 }
