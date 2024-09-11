@@ -38,7 +38,14 @@ setup() {
 @test "log.success should output success message" {
   run log.success "Test success message"
   assert_output --partial "SUCCESS"
-  assert_output --regexp "[0-9]{4}-[0-9]{2}-[0-9]{2}" #2024-09-11
+  assert_output --partial "Test success message"
+}
+
+# Test: log.success should output a valid timestamp format
+@test "log.success should output valid timestamp format" {
+  run log.success "Test success message"
+  # Verify that the output contains a valid timestamp format (YYYY-MM-DD)
+  assert_output --regexp "[0-9]{4}-[0-9]{2}-[0-9]{2}"
 }
 
 # Test: NO_COLOR should disable colored output
