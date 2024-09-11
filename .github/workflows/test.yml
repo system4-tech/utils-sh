@@ -1,0 +1,15 @@
+name: test
+on:
+  pull_request:
+    types: [opened, reopened]
+jobs:
+  bats:
+    runs-on: ubuntu-latest
+    container:
+      image: bats/bats:latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run tests
+        run: bats ./tests/*.bats
