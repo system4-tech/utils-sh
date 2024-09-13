@@ -33,11 +33,10 @@ _log() {
   # Check if logging for this level is disabled
   if [[ ! -v "LOG_${level}_DISABLED" ]]; then
     # Get timestamp with millisecond precision, fallback to basic if %-3N is unsupported
-    instant=$(date '+%F %T.%-3N' 2>/dev/null || date '+%F %T' 2>/dev/null || :)
+    instant=$(date '+%F %T.%-3N' 2>/dev/null || date '+%F %T' || :)
 
     # https://no-color.org/
     if [[ -v NO_COLOR ]]; then
-      # todo: consider replacing "$*" with "$@" to handle multiple arguments with spaces
       printf -- '%s  %s --- %s\n' "$instant" "$level" "$*" 1>&2 || :
     else
       printf -- '\033[0;%dm%s  %s --- %s\033[0m\n' "$color" "$instant" "$level" "$*" 1>&2 || :
