@@ -19,4 +19,11 @@ command || level=error
 log.$level message
 ```
 
+## HTTP
+
+```sh
+http.get "https://httpbin.org/get"
+http.post "https://httpbin.org/post" "data=example"
+```
+
 See [tests](tests/) for more examples.
