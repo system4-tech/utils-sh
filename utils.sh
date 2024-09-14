@@ -139,3 +139,4 @@ download() {
     --parallel \
     --parallel-max "${HTTP_PARALLEL_MAX:-10}"
 }
+
