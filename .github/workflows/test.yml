@@ -1,12 +1,11 @@
 name: test
 on:
   pull_request:
-    types: [opened, reopened]
 jobs:
   bats:
     runs-on: ubuntu-latest
     container:
-      image: bats/bats:latest
+      image: ghcr.io/system4-tech/task-runner:ubuntu
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
