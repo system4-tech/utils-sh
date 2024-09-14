@@ -139,3 +139,23 @@ download() {
     --parallel \
     --parallel-max "${HTTP_PARALLEL_MAX:-10}"
 }
+
+download() {
+  local url path
+
+  url=${1:?missing required <url> argument}
+  path=${2:?missing required <path> argument}
+  shift 2
+
+  curl "$url" "$@" \
+  --output "$path" \
+  --fail \
+  --silent \
+  --show-error \
+  --location \
+  --retry "${HTTP_RETRY_NUM:-20}" \
+  --retry-connrefused \
+  --compressed \
+  --parallel \
+  --parallel-max "${HTTP_PARALLEL_MAX:-10}"
+}

@@ -5,6 +5,7 @@ setup() {
   bats_load_library bats-assert
   bats_load_library bats-file
   load "../utils.sh"
+  temp_dir="$(temp_make)"
 }
 
 # Test: http.get should make a GET request
@@ -26,4 +27,27 @@ setup() {
   run http.put "https://httpbin.org/put" "data=example"
   assert_success
   assert_output --partial '"data": "example"'
+}
+
+# Test: download should download a file
+@test "download should download a file" {
+  local file="${temp_dir}/image.png"
+  run download "https://httpbin.org/image/png" "$file"
+  assert_success
+  # Check if the file exists
+  assert_file_exist "$file"
+}
+
+# Test: download should download multiple files
+@test "download should download multiple files" {
+  run download "https://httpbin.org/image/{jpeg,png,svg}" "${temp_dir}/image.#1"
+  assert_success
+  # Check if files exists
+  assert_file_exist "${temp_dir}/image.jpeg"
+  assert_file_exist "${temp_dir}/image.png"
+  assert_file_exist "${temp_dir}/image.svg"
+}
+
+teardown() {
+  temp_del "$temp_dir"
 }
