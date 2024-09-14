@@ -14,7 +14,7 @@ source utils.sh
 ## Logging
 
 ```sh
-level=info
+level=notice
 command || level=error
 log.$level message
 ```
