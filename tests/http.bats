@@ -48,6 +48,15 @@ setup() {
   assert_file_exist "${temp_dir}/image.svg"
 }
 
+# Test: download should output filenames
+@test "download should output filenames" {
+  run download "https://httpbin.org/image/{png,jpeg}" "${temp_dir}/image.#1"
+  assert_success
+  # Check if png and jpeg files are present in the output, regardless of order
+  assert_line "${temp_dir}/image.png"
+  assert_line "${temp_dir}/image.jpeg"
+}
+
 teardown() {
   temp_del "$temp_dir"
 }

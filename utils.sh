@@ -74,7 +74,7 @@ log.success() {
 #   Response from the server
 #######################################
 _http() {
-  local url method 
+  local url method
 
   url=${1:?missing required <url> argument}
   shift
@@ -137,6 +137,6 @@ download() {
     --retry-connrefused \
     --compressed \
     --parallel \
-    --parallel-max "${HTTP_PARALLEL_MAX:-10}"
+    --parallel-max "${HTTP_PARALLEL_MAX:-10}" \
+    --write-out "%{filename_effective}\n"
 }
-
