@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-set -e
+set -eu
 
-source <(curl -fsSL https://raw.githubusercontent.com/system4-tech/utils-sh/main/utils.sh)
+source "${BASH_SOURCE[0]%/*}/../utils.sh"
 
 main() {
   log.notice "test http get"
