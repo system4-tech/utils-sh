@@ -1,17 +1,17 @@
-# [`utils.sh`](utils.sh)
+# [`utils.sh`](lib/utils.sh)
 
 This repository contains shell utility programs.
 
 ## Usage
 
-## Import
+### Import
 
 ```sh
-wget https://raw.githubusercontent.com/system4-tech/utils-sh/main/utils.sh
+wget https://raw.githubusercontent.com/system4-tech/utils-sh/main/lib/utils.sh
 source utils.sh
 ```
 
-## Logging
+### Logging
 
 ```sh
 level=notice
@@ -19,14 +19,14 @@ command || level=error
 log.$level message
 ```
 
-## HTTP
+### HTTP
 
 ```sh
 http.get "https://httpbin.org/get"
 http.post "https://httpbin.org/post" "data=example"
 ```
 
-## Download
+### Download
 
 ```sh
 download "https://example.com/file[1-4].txt" "file#1.txt"
