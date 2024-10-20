@@ -3,7 +3,7 @@
 setup() {
   bats_load_library bats-support
   bats_load_library bats-assert
-  load "../utils.sh"
+  load "../src/log.sh"
 }
 
 # Test: log.debug should output a correctly formatted debug message

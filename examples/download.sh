@@ -2,7 +2,7 @@
 
 set -eu
 
-source "${BASH_SOURCE[0]%/*}/../utils.sh"
+source "${BASH_SOURCE[0]%/*}/../lib/utils.sh"
 
 main() {
   log.notice "downloading different image formats"

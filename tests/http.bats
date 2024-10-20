@@ -4,7 +4,7 @@ setup() {
   bats_load_library bats-support
   bats_load_library bats-assert
   bats_load_library bats-file
-  load "../utils.sh"
+  load "../src/http.sh"
   temp_dir="$(temp_make)"
 }
 
