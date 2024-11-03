@@ -2,7 +2,9 @@
 
 set -eu
 
-source "${BASH_SOURCE[0]%/*}/../lib/utils.sh"
+SCRIPTDIR=${BASH_SOURCE[0]%/*}
+
+. "$SCRIPTDIR/../lib/utils.sh"
 
 main() {
   log.notice "downloading different image formats"
