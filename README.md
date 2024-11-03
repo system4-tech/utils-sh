@@ -8,7 +8,7 @@ This repository contains shell utility programs.
 
 ```sh
 wget https://raw.githubusercontent.com/system4-tech/utils-sh/main/lib/utils.sh
-source utils.sh
+. utils.sh
 ```
 
 ### Logging
