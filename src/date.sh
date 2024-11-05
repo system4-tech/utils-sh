@@ -20,3 +20,21 @@ is_date() {
     return 1
   fi
 }
+
+#######################################
+# Converts a date string to milliseconds since the Unix epoch.
+# Assumes the provided date is valid; use is_date() to verify.
+# Globals:
+#   None
+# Arguments:
+#   date (string): Date string
+# Outputs:
+#   Writes milliseconds since Unix epoch to stdout
+# Returns:
+#   0 on success
+#######################################
+date_to_ms() {
+  local date=${1:?missing required <date> argument}
+
+  date -d "$date" +%s%3N
+}
