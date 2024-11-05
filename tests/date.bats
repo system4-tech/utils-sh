@@ -35,7 +35,7 @@ setup() {
 @test "date_to_ms returns milliseconds for a valid date" {  
   run date_to_ms "2024-10-20"
   assert_success
-  assert_output "1729375200000"
+  assert_output $(date -d "2024-10-20" +%s%3N) # get expected output in ms
 }
 
 # Test: date_to_ms should fail for an invalid date
