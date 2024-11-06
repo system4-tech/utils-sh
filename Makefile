@@ -1,3 +1,5 @@
+all:
+	make shellcheck test build
 build:
 	@awk -f inline.awk src/main.sh > lib/utils.sh
 test:
