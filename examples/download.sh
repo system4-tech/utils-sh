@@ -2,9 +2,9 @@
 
 set -eu
 
-SCRIPTDIR=${BASH_SOURCE[0]%/*}
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-. "$SCRIPTDIR/../lib/utils.sh"
+. "$SCRIPT_DIR/../lib/utils.sh"
 
 main() {
   log.notice "downloading different image formats"
