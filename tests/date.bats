@@ -55,3 +55,27 @@ setup() {
   run date_to_ms
   assert_failure
 }
+
+# Test: today should return today's date
+@test "today returns today's date" {
+  expected_date=$(date +%F)
+  run today
+  assert_success
+  assert_output "$expected_date"
+}
+
+# Test: yesterday should return yesterday's date
+@test "yesterday returns yesterday's date" {
+  expected_date=$(date -d "yesterday" +%F)
+  run yesterday
+  assert_success
+  assert_output "$expected_date"
+}
+
+# Test: tomorrow should return tomorrow's date
+@test "tomorrow returns tomorrow's date" {
+  expected_date=$(date -d "tomorrow" +%F)
+  run tomorrow
+  assert_success
+  assert_output "$expected_date"
+}
