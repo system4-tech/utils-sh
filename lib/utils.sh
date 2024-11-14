@@ -85,9 +85,8 @@ _http() {
 
   curl "$url" "$@" \
     --request "$method" \
-    --fail \
+    --fail-with-body \
     --silent \
-    --show-error \
     --location \
     --retry-connrefused \
     --max-time "${HTTP_MAX_TIME:-180}" \
@@ -227,6 +226,51 @@ date_to_ms() {
   local date=${1:?missing required <date> argument}
 
   date -d "$date" +%s%3N
+}
+
+#######################################
+# Gets today's date in YYYY-MM-DD format.
+# Globals:
+#   None
+# Arguments:
+#   None
+# Outputs:
+#   Writes today's date to stdout
+# Returns:
+#   0 on success
+#######################################
+today() {
+  date +%F
+}
+
+#######################################
+# Gets yesterday's date in YYYY-MM-DD format.
+# Globals:
+#   None
+# Arguments:
+#   None
+# Outputs:
+#   Writes yesterday's date to stdout
+# Returns:
+#   0 on success
+#######################################
+yesterday() {
+  date -d "yesterday" +%F
+}
+
+#######################################
+# Gets tomorrow's date in YYYY-MM-DD format.
+# Globals:
+#   None
+# Arguments:
+#   None
+# Outputs:
+#   Writes tomorrow's date to stdout
+# Returns:
+#   0 on success
+#######################################
+tomorrow() {
+  date -d "tomorrow" +%F
 }
 
 #######################################
