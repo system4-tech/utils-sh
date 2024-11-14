@@ -22,9 +22,8 @@ _http() {
 
   curl "$url" "$@" \
     --request "$method" \
-    --fail \
+    --fail-with-body \
     --silent \
-    --show-error \
     --location \
     --retry-connrefused \
     --max-time "${HTTP_MAX_TIME:-180}" \
