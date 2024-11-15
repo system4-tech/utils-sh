@@ -42,3 +42,17 @@ setup() {
   run is_empty
   assert_success
 }
+
+# Test: fail should print an error message and exit with status 1
+@test "fail prints error message and exits with status 1" {
+  run fail "Something went wrong"
+  assert_failure
+  assert_output "Something went wrong"
+}
+
+# Test: fail should print an empty error message and exit with status 1 if no argument is passed
+@test "fail exits with status 1 when no argument is provided" {
+  run fail
+  assert_failure
+  assert_output ""
+}

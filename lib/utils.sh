@@ -314,3 +314,20 @@ is_empty() {
     return 1
   fi
 }
+
+#######################################
+# Prints an error message to stderr and exits the script.
+# Globals:
+#   None
+# Arguments:
+#   message (string): The error message to display.
+# Outputs:
+#   Writes the error message to stderr.
+# Returns:
+#   Exits the script with a status code of 1.
+#######################################
+fail() {
+  local message="$*"
+  echo "$message" >&2
+  exit 1
+}
