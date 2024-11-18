@@ -12,12 +12,10 @@
 #   0 on success
 #######################################
 json_to_ndjson() {
-  local json
+  local json=${1:-}
 
-  if [ -t 0 ]; then
-    json=${1:?Error: Missing <json> argument}
-  else
-    json=$(cat)
+  if [ -z "$json" ] && [ -p /dev/stdin ]; then
+    json=$(< /dev/stdin)    
   fi
 
   if [ -z "$json" ]; then
