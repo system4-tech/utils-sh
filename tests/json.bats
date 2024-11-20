@@ -43,3 +43,55 @@ setup() {
   assert_line '{"name":"John"}'
   assert_line '{"name":"Jane"}'
 }
+
+# Test: json_to_tsv outputs TSV for an array of objects
+@test "json_to_tsv outputs TSV for an array of objects" {
+  json_input='[{"name": "Alice", "age": 30}, {"name": "Bob", "age": 25}]'
+  run json_to_tsv "$json_input"
+  assert_success
+  assert_output $'Alice\t30\nBob\t25'
+}
+
+# Test: json_to_tsv outputs TSV for an array of arrays
+@test "json_to_tsv outputs TSV for an array of arrays" {
+  json_input='[[1, 2, 3], [4, 5, 6]]'
+  run json_to_tsv "$json_input"
+  assert_success
+  assert_line $'1\t2\t3'
+  assert_line $'4\t5\t6'
+}
+
+# Test: json_to_tsv outputs TSV for mixed input types
+@test "json_to_tsv outputs TSV for mixed input types" {
+  json_input='[
+    {"name": "Alice", "age": 30},
+    [1, 2, 3],
+    "single value"
+  ]'
+  run json_to_tsv "$json_input"
+  assert_success
+  assert_line $'Alice\t30'
+  assert_line $'1\t2\t3'
+  assert_line "single value"
+}
+
+# Test: json_to_tsv fails for an empty JSON string
+@test "json_to_tsv fails for an empty JSON string" {
+  run json_to_tsv ""
+  assert_failure
+}
+
+# Test: json_to_tsv fails when no argument is provided and no input is piped
+@test "json_to_tsv fails when argument is missing and no input is piped" {
+  run json_to_tsv
+  assert_failure
+}
+
+# Test: json_to_tsv handles input provided via a pipe
+@test "json_to_tsv works when input is piped" {
+  json_input='[{"name": "Alice", "age": 30}, {"name": "Bob", "age": 25}]'
+  run bats_pipe echo "$json_input" \| json_to_tsv
+  assert_success
+  assert_line $'Alice\t30'
+  assert_line $'Bob\t25'
+}
