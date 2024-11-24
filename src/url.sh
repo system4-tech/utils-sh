@@ -69,16 +69,12 @@ urlparam() {
   key=$(urlencode "$key")
   value=$(urlencode "$value")
 
-  # If the URL already contains the parameter, replace its value
   if [[ "$url" =~ ([?&])$key= ]]; then
-    url="${url//$key=[^&]*/$key=$value}"
+    url=$(echo "$url" | sed -E "s/([?&]$key=)[^&]*/\1$value/")
+  elif [[ "$url" == *"?"* ]]; then
+    url="$url&$key=$value"
   else
-    # Otherwise, add the parameter
-    if [[ "$url" == *"?"* ]]; then
-      url="$url&$key=$value"
-    else
-      url="$url?$key=$value"
-    fi
+    url="$url?$key=$value"
   fi
 
   echo "$url"

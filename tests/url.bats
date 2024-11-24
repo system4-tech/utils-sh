@@ -44,9 +44,9 @@ setup() {
 
 # Test: urlparam should update an existing query parameter in the URL
 @test "urlparam updates an existing query parameter in the URL" {
-  run urlparam "https://example.com?name=Alice" "name" "Bob"
+  run urlparam "https://example.com?name=Alice&age=30" "name" "Bob"
   assert_success
-  assert_output "https://example.com?name=Bob"
+  assert_output "https://example.com?name=Bob&age=30"
 }
 
 # Test: urlparam should handle a URL with multiple query parameters
