@@ -50,6 +50,7 @@ json_to_tsv() {
     return 1
   fi
 
+  # todo: support streaming
   echo "$json" | jq -r '
     .[] |
     if type == "array" then
