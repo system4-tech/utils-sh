@@ -62,3 +62,45 @@ json_to_tsv() {
     end | @tsv
   '
 }
+
+#######################################
+# Checks if a string is valid JSON.
+# Globals:
+#   None
+# Arguments:
+#   json (string): Input string to validate
+# Outputs:
+#   None
+# Returns:
+#   0 if the input is valid JSON, 1 otherwise
+#######################################
+is_json() {
+  local json="${1:-}"
+
+  if echo "${json}" | jq -e . >/dev/null 2>&1; then
+    return 0
+  else
+    return 1
+  fi
+}
+
+#######################################
+# Checks if a string is a valid JSON array.
+# Globals:
+#   None
+# Arguments:
+#   json (string): Input string to validate as a JSON array
+# Outputs:
+#   None
+# Returns:
+#   0 if the input is a valid JSON array, 1 otherwise
+#######################################
+is_array() {
+  local json="${1:-}"
+
+  if echo "${json}" | jq -e 'if type == "array" then true else false end' >/dev/null 2>&1; then
+    return 0
+  else
+    return 1
+  fi
+}
