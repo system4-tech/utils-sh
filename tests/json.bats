@@ -95,3 +95,45 @@ setup() {
   assert_line $'Alice\t30'
   assert_line $'Bob\t25'
 }
+
+# Test: is_json detects valid JSON
+@test "is_json detects valid JSON" {
+  run is_json '{"name": "John", "age": 30}'
+  assert_success
+}
+
+# Test: is_json fails for invalid JSON
+@test "is_json fails for invalid JSON" {
+  run is_json '{"name": "John", "age": 30,}'  # Trailing comma is invalid
+  assert_failure
+}
+
+# Test: is_json fails for non-JSON input
+@test "is_json fails for non-JSON input" {
+  run is_json "Hello, world!"
+  assert_failure
+}
+
+# Test: is_array detects JSON arrays
+@test "is_array detects JSON arrays" {
+  run is_array '[1, 2, 3]'
+  assert_success
+}
+
+# Test: is_array fails for non-array JSON input
+@test "is_array fails for non-array JSON input" {
+  run is_array '{"key": "value"}'
+  assert_failure
+}
+
+# Test: is_array fails for invalid JSON
+@test "is_array fails for invalid JSON" {
+  run is_array '[1, 2, 3,]'  # Trailing comma is invalid
+  assert_failure
+}
+
+# Test: is_array fails for non-JSON input
+@test "is_array fails for non-JSON input" {
+  run is_array "Hello, world!"
+  assert_failure
+}
