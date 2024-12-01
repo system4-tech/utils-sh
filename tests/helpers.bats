@@ -56,3 +56,15 @@ setup() {
   assert_failure
   assert_output ""
 }
+
+# Test: has_failed should return 1 if the last command failed
+@test "has_failed returns 1 if the last command failed" {
+  run false && has_failed
+  assert_failure
+}
+
+# Test: has_failed should return 0 if the last command succeeded
+@test "has_failed returns 0 if the last command succeeded" {
+  run true && has_failed
+  assert_success
+}
