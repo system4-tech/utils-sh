@@ -137,3 +137,55 @@ setup() {
   run is_array "Hello, world!"
   assert_failure
 }
+
+# Test: json_to_csv outputs CSV for an array of objects
+@test "json_to_csv outputs CSV for an array of objects" {
+  json_input='[{"name": "Alice", "age": 30}, {"name": "Bob", "age": 25}]'
+  run json_to_csv "$json_input"
+  assert_success
+  assert_output $'"Alice",30\n"Bob",25'
+}
+
+# Test: json_to_csv outputs CSV for an array of arrays
+@test "json_to_csv outputs CSV for an array of arrays" {
+  json_input='[[1, 2, 3], [4, 5, 6]]'
+  run json_to_csv "$json_input"
+  assert_success
+  assert_line '1,2,3'
+  assert_line '4,5,6'
+}
+
+# Test: json_to_csv outputs CSV for mixed input types
+@test "json_to_csv outputs CSV for mixed input types" {
+  json_input='[
+    {"name": "Alice", "age": 30},
+    [1, 2, 3],
+    "single value"
+  ]'
+  run json_to_csv "$json_input"
+  assert_success
+  assert_line '"Alice",30'
+  assert_line "1,2,3"
+  assert_line '"single value"'
+}
+
+# Test: json_to_csv fails for an empty JSON string
+@test "json_to_csv fails for an empty JSON string" {
+  run json_to_csv ""
+  assert_failure
+}
+
+# Test: json_to_csv fails when no argument is provided and no input is piped
+@test "json_to_csv fails when argument is missing and no input is piped" {
+  run json_to_csv
+  assert_failure
+}
+
+# Test: json_to_csv handles input provided via a pipe
+@test "json_to_csv works when input is piped" {
+  json_input='[{"name": "Alice", "age": 30}, {"name": "Bob", "age": 25}]'
+  run bats_pipe echo "$json_input" \| json_to_csv
+  assert_success
+  assert_line '"Alice",30'
+  assert_line '"Bob",25'
+}
