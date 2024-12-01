@@ -354,6 +354,21 @@ tomorrow() {
 }
 
 #######################################
+# Gets the current date and time in YYYY-MM-DD HH:MM:SS.sss format.
+# Globals:
+#   None
+# Arguments:
+#   None
+# Outputs:
+#   Writes the current date and time to stdout, including milliseconds if supported.
+# Returns:
+#   0 on success
+#######################################
+now() {
+  date '+%Y-%m-%d %H:%M:%S.%3N'
+}
+
+#######################################
 # Converts a JSON array into newline-delimited JSON (NDJSON).
 # Globals:
 #   None
