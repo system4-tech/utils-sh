@@ -553,3 +553,24 @@ fail() {
   echo "$message" >&2
   exit 1
 }
+
+#######################################
+# Checks if the last command failed (non-zero exit code).
+# Globals:
+#   None
+# Arguments:
+#   None
+# Outputs:
+#   Writes nothing to stdout.
+# Returns:
+#   0 (true) if the last command failed, 1 (false) otherwise.
+#######################################
+has_failed() {
+  local last_exit_code=$?
+  
+  if [[ $last_exit_code -ne 0 ]]; then
+    return 1
+  else
+    return 0
+  fi
+}
