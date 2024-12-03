@@ -217,13 +217,6 @@ setup() {
   assert_output "4"
 }
 
-# Test: json_length returns correct length for nested JSON arrays with a path
-@test "json_length returns correct length for nested JSON arrays with a path" {
-  run json_length '{"nested": {"array": [1, 2, 3]}}' ".nested.array"
-  assert_success
-  assert_output "3"
-}
-
 # Test: json_length fails for an empty JSON string
 @test "json_length fails for an empty JSON string" {
   run json_length ""
@@ -233,5 +226,35 @@ setup() {
 # Test: json_length fails when argument is missing and no input is piped
 @test "json_length fails when argument is missing and no input is piped" {
   run json_length
+  assert_failure
+}
+
+# Test: is_json_empty returns 0 for an empty JSON array
+@test "is_json_empty returns 0 for an empty JSON array" {
+  run is_json_empty '[]'
+  assert_success
+}
+
+# Test: is_json_empty returns 1 for a non-empty JSON array
+@test "is_json_empty returns 1 for a non-empty JSON array" {
+  run is_json_empty '[1, 2, 3]'
+  assert_failure
+}
+
+# Test: is_json_empty returns 1 for a non-array JSON input
+@test "is_json_empty returns 1 for a non-array JSON input" {
+  run is_json_empty '{"key": "value"}'
+  assert_failure
+}
+
+# Test: is_json_empty fails for invalid JSON
+@test "is_json_empty fails for invalid JSON" {
+  run is_json_empty '[1, 2, 3,]'  # Trailing comma is invalid
+  assert_failure
+}
+
+# Test: is_json_empty returns 1 for non-JSON input
+@test "is_json_empty returns 1 for non-JSON input" {
+  run is_json_empty "Hello, world!"
   assert_failure
 }
