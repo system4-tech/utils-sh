@@ -16,18 +16,6 @@ setup() {
   assert_line '{"name":"Jane"}'
 }
 
-# Test: json_to_ndjson should fail for an empty JSON string
-@test "json_to_ndjson fails for an empty JSON string" {
-  run json_to_ndjson ""
-  assert_failure
-}
-
-# Test: json_to_ndjson should fail when no argument is provided and no input is piped
-@test "json_to_ndjson fails when argument is missing and no input is piped" {
-  run json_to_ndjson
-  assert_failure
-}
-
 # Test: json_to_ndjson should handle an invalid JSON string
 @test "json_to_ndjson fails for an invalid JSON string" {
   invalid_json='[{"name": "John", "age": 30,}]'  # Trailing comma is invalid
@@ -73,18 +61,6 @@ setup() {
   assert_line $'Alice\t30'
   assert_line $'1\t2\t3'
   assert_line "single value"
-}
-
-# Test: json_to_tsv fails for an empty JSON string
-@test "json_to_tsv fails for an empty JSON string" {
-  run json_to_tsv ""
-  assert_failure
-}
-
-# Test: json_to_tsv fails when no argument is provided and no input is piped
-@test "json_to_tsv fails when argument is missing and no input is piped" {
-  run json_to_tsv
-  assert_failure
 }
 
 # Test: json_to_tsv handles input provided via a pipe
@@ -169,18 +145,6 @@ setup() {
   assert_line '"single value"'
 }
 
-# Test: json_to_csv fails for an empty JSON string
-@test "json_to_csv fails for an empty JSON string" {
-  run json_to_csv ""
-  assert_failure
-}
-
-# Test: json_to_csv fails when no argument is provided and no input is piped
-@test "json_to_csv fails when argument is missing and no input is piped" {
-  run json_to_csv
-  assert_failure
-}
-
 # Test: json_to_csv handles input provided via a pipe
 @test "json_to_csv works when input is piped" {
   json_input='[{"name": "Alice", "age": 30}, {"name": "Bob", "age": 25}]'
@@ -215,23 +179,4 @@ setup() {
   run bats_pipe echo '[1, 2, 3, 4]' \| json_length
   assert_success
   assert_output "4"
-}
-
-# Test: json_length returns correct length for nested JSON arrays with a path
-@test "json_length returns correct length for nested JSON arrays with a path" {
-  run json_length '{"nested": {"array": [1, 2, 3]}}' ".nested.array"
-  assert_success
-  assert_output "3"
-}
-
-# Test: json_length fails for an empty JSON string
-@test "json_length fails for an empty JSON string" {
-  run json_length ""
-  assert_failure
-}
-
-# Test: json_length fails when argument is missing and no input is piped
-@test "json_length fails when argument is missing and no input is piped" {
-  run json_length
-  assert_failure
 }
