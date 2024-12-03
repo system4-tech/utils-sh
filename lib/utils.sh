@@ -511,6 +511,34 @@ json_to_csv() {
 }
 
 #######################################
+# Counts the length of a JSON array.
+# Globals:
+#   None
+# Arguments:
+#   json (string): JSON array as a string
+#   path (string): Optional. JSON path to the array (default: ".")
+# Outputs:
+#   Writes the length of the JSON array to stdout
+# Returns:
+#   0 on success, 1 on error
+#######################################
+json_length() {
+  local json=${1:-}
+  local path=${2:-.}
+
+  if [ -z "$json" ] && [ -p /dev/stdin ]; then
+    json=$(< /dev/stdin)
+  fi
+
+  if [ -z "$json" ]; then
+    echo "Error: Empty JSON string" >&2
+    return 1
+  fi
+
+  echo "${json}" | jq -r "${path} | length" 
+}
+
+#######################################
 # Checks if the provided argument is set (non-empty).
 # Globals:
 #   None
