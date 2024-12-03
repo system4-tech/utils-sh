@@ -189,3 +189,49 @@ setup() {
   assert_line '"Alice",30'
   assert_line '"Bob",25'
 }
+
+# Test: json_length returns the correct length for a valid JSON array
+@test "json_length returns correct length for a valid JSON array" {
+  run json_length '[1, 2, 3, 4]'
+  assert_success
+  assert_output "4"
+}
+
+# Test: json_length returns 0 for an empty JSON array
+@test "json_length returns 0 for an empty JSON array" {
+  run json_length '[]'
+  assert_success
+  assert_output "0"
+}
+
+# Test: json_length fails for invalid JSON
+@test "json_length fails for invalid JSON" {
+  run json_length '[1, 2, 3,]'
+  assert_failure
+}
+
+# Test: json_length handles input provided via a pipe
+@test "json_length works when input is piped" {
+  run bats_pipe echo '[1, 2, 3, 4]' \| json_length
+  assert_success
+  assert_output "4"
+}
+
+# Test: json_length returns correct length for nested JSON arrays with a path
+@test "json_length returns correct length for nested JSON arrays with a path" {
+  run json_length '{"nested": {"array": [1, 2, 3]}}' ".nested.array"
+  assert_success
+  assert_output "3"
+}
+
+# Test: json_length fails for an empty JSON string
+@test "json_length fails for an empty JSON string" {
+  run json_length ""
+  assert_failure
+}
+
+# Test: json_length fails when argument is missing and no input is piped
+@test "json_length fails when argument is missing and no input is piped" {
+  run json_length
+  assert_failure
+}
