@@ -79,3 +79,34 @@ setup() {
   assert_success
   assert_output "$expected_date"
 }
+
+# Test: format_date should return the date in the specified format
+@test "format_date returns date in specified format" {
+  run format_date "2024-10-20" "%d/%m/%Y"
+  assert_success
+  assert_output "20/10/2024"
+}
+
+# Test: format_date should fail for an invalid date
+@test "format_date fails for an invalid date" {
+  run format_date "2024-13-40" "%d/%m/%Y"
+  assert_failure
+}
+
+# Test: format_date should fail when date argument is empty
+@test "format_date fails for an empty date argument" {
+  run format_date "" "%d/%m/%Y"
+  assert_failure
+}
+
+# Test: format_date should fail when format argument is empty
+@test "format_date fails for an empty format argument" {
+  run format_date "2024-10-20" ""
+  assert_failure
+}
+
+# Test: format_date should fail when no arguments are passed
+@test "format_date fails when arguments are missing" {
+  run format_date
+  assert_failure
+}
