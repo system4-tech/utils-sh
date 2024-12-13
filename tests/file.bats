@@ -57,6 +57,29 @@ setup() {
   assert_failure
 }
 
+# Test: file_split splits a file into multiple parts
+@test "file_split splits a file into multiple parts" {
+  echo "line1" > "$temp_file"
+  echo "line2" >> "$temp_file"
+  echo "line3" >> "$temp_file"
+  run file_split "$temp_file" "${temp_dir}/part" 2
+  assert_success
+  assert_file_exist "${temp_dir}/part01"
+  assert_file_exist "${temp_dir}/part02"
+}
+
+# Test: file_split returns 1 for a non-existing file
+@test "file_split returns 1 for a non-existing file" {
+  run file_split "$temp_dir/non_existing_file.txt" 2
+  assert_failure
+}
+
+# Test: file_split returns 1 when argument is missing
+@test "file_split returns 1 when argument is missing" {
+  run file_split
+  assert_failure
+}
+
 teardown() {
   temp_del "$temp_dir"
   rm -f "$temp_file"
