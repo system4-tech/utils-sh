@@ -56,3 +56,37 @@ setup() {
   assert_failure
   assert_output ""
 }
+
+# Test: script_dir should return the directory of the script
+@test "script_dir returns the directory of the script" {
+  run script_dir
+  assert_success
+  assert_line --partial "utils-sh"
+}
+
+# Test: file_lookup should return 0 if the command exists
+@test "file_lookup returns 0 if the command exists" {
+  run file_lookup "bats"
+  assert_success
+}
+
+# Test: file_lookup should return 1 if the command does not exist
+@test "file_lookup returns 1 if the command does not exist" {
+  run file_lookup "nonexistentcommand"
+  assert_failure
+}
+
+# Test: script_run should execute a command and return its output
+@test "script_run executes a command and returns its output" {
+  run script_run echo "Hello"
+  assert_success
+  assert_output "Hello"
+}
+
+# Test: script_load should source a file and make its functions available
+@test "script_load sources a file and makes its functions available" {
+  run script_load "../src/helpers.sh"
+  assert_success
+  run is_set "Hello"
+  assert_success
+}
