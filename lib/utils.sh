@@ -95,7 +95,7 @@ _http() {
 }
 
 http.get() {
-  _http "$@"
+  _http --get "$@"
 }
 
 http.post() {
